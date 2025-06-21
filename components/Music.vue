@@ -22,7 +22,7 @@
         Below you'll find a preview of one of my recent projects - offering a first impression of my sound, creative direction, and style.
       </p>
       <div 
-        class="mx-auto max-w-3/5" 
+        class="mx-auto md:w-3/5" 
         v-html="embed" 
       />
     </div>
