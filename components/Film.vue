@@ -24,7 +24,7 @@
         The main focus of this project was on editing, where I shaped the visual story through timing, rhythm, and emotion in post-production.
       </p>
       <div 
-        class="mx-auto w-3/5" 
+        class="mx-auto max-w-3/5" 
         v-html="embed" 
       />
     </div>

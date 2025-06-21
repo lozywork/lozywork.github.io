@@ -17,7 +17,7 @@
         What started as a hobby has increasingly become my professional goal. Over the past few years, I've brought various projects to life, explored new directions, and continue working on expanding my portfolio, skills, and knowledge.<br><br>
         Here you'll find an overview of what I do - and where I'm heading.
       </p>
-      <div class="mt-8 flex items-center gap-24">
+      <div class="mt-8 flex items-center mx-auto md:mx-0 gap-12 md:gap-24">
         <!--ZoLo Cinema-->
         <div class="flex flex-col gap-8">
           <p class="mt-4 font-medium text-[#848484] mx-auto">🎬 ZoLo Cinema</p>
