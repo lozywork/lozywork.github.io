@@ -42,7 +42,7 @@
         </p>
         <div class="flex gap-6 mx-auto">
           <a
-            href="zolo.cinematics@gmail.com"
+            href="mailto:zolo.cinematics@gmail.com"
             class="default-hover"
             title="email"
           >
@@ -60,7 +60,7 @@
         </p>
         <div class="flex gap-6 mx-auto">
           <a
-            href="sassman.business@gmail.com"
+            href="mailto:sassman.business@gmail.com"
             class="default-hover"
             title="email"
           >
