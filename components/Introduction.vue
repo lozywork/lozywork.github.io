@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-start pt-3 gap-8 md:flex-row-reverse md:items-center md:justify-between">
+  <div class="flex flex-col items-start pt-6 gap-8 md:flex-row-reverse md:items-center md:justify-between">
     <img
       alt="Portrait"
       width="175"
@@ -13,13 +13,11 @@
         Hi, I'm Lonny Zeindler
       </h1>
       <p class="mt-4 font-medium text-[#848484]">
-        A creative mind working passionately in the fields of music and film. Under the name Lozy, I bring together my projects, ideas, and visions - gradually building a path toward a sustainable creative career.<br><br>
-        What started as a hobby has increasingly become my professional goal. Over the past few years, I've brought various projects to life, explored new directions, and continue working on expanding my portfolio, skills, and knowledge.<br><br>
-        Here you'll find an overview of what I do - and where I'm heading.
+        I'm Lozy - music producer, filmmaker and lifelong experimenter. What began as a hobby now fuels my career as I produce music, films and push each project further than the last.
       </p>
-      <div class="mt-8 flex items-center mx-auto md:mx-0 gap-12 md:gap-24">
+      <div class="mt-2 flex flex-col md:flex-row items-center mx-auto md:mx-0 gap-6 md:gap-24">
         <!--ZoLo Cinema-->
-        <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-3">
           <p class="mt-4 font-medium text-[#848484] mx-auto">🎬 ZoLo Cinema</p>
           <div class="flex gap-6 mx-auto">
             <a
@@ -48,7 +46,7 @@
         </div>
 
         <!--prodby.sassey-->
-        <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-3">
           <p class="mt-4 font-medium text-[#848484] mx-auto">🎧 prodby.sassey</p>
           <div class="flex gap-6">
             <a
