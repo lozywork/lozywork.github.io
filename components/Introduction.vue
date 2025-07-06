@@ -13,7 +13,7 @@
         Hi, I'm Lonny Zeindler
       </h1>
       <p class="mt-4 font-medium text-[#848484]">
-        I'm Lozy - music producer, filmmaker and lifelong experimenter. What began as a hobby now fuels my career as I produce music, films and push each project further than the last.
+        I'm <b>Lozy</b> - music producer, filmmaker and lifelong experimenter. What began as a hobby now fuels my career as I produce music, films and push each project further than the last.
       </p>
       <div class="mt-2 flex flex-col md:flex-row items-center mx-auto md:mx-0 gap-6 md:gap-24">
         <!--ZoLo Cinema-->
