@@ -18,7 +18,9 @@
       <div class="mt-2 flex flex-col md:flex-row items-center mx-auto md:mx-0 gap-6 md:gap-24">
         <!--ZoLo Cinema-->
         <div class="flex flex-col gap-3">
-          <p class="mt-4 font-medium text-[#848484] mx-auto">🎬 ZoLo Cinema</p>
+          <p class="mt-4 font-medium text-[#848484] mx-auto">
+            🎬 ZoLo Cinema
+          </p>
           <div class="flex gap-6 mx-auto">
             <a
               href="https://www.instagram.com/zolo_cinema/"
@@ -47,7 +49,9 @@
 
         <!--prodby.sassey-->
         <div class="flex flex-col gap-3">
-          <p class="mt-4 font-medium text-[#848484] mx-auto">🎧 prodby.sassey</p>
+          <p class="mt-4 font-medium text-[#848484] mx-auto">
+            🎧 prodby.sassey
+          </p>
           <div class="flex gap-6">
             <a
               href="https://www.instagram.com/prodby.sassey/"

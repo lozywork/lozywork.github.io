@@ -13,10 +13,11 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxtjs/eslint-module',
     '@nuxtjs/google-fonts',
-    '@nuxt/icon'
+    '@nuxt/icon',
+    '@pinia/nuxt',
   ],
 
-  css: ['~/assets/css/main.scss'],
+  css: ['~/assets/css/main.css'],
 
   components: [
     {
