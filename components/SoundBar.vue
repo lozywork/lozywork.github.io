@@ -7,7 +7,7 @@
           class="text-[#848484] h-7 w-7"
         />
       </div>
-      {{ project.name }}
+      {{ project.item }}
     </div>
   </div>
 </template>

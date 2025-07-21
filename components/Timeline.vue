@@ -1,94 +1,120 @@
+<script setup lang="ts">
+import { computed, type PropType } from 'vue';
+import { useCurrentProjectStore } from '~/stores/project';
+
+export interface ProjectItem {
+  name: string;
+  description: string;
+  typ: 'music' | 'film';
+  src: string;
+  coverSrc: string;
+}
+
+const props = defineProps({
+  height:       { type: Number, default: 600 },
+  amplitude:    { type: Number, default: 40 },
+  wavelength:   { type: Number, default: 120 },
+  dotSpacing:   { type: Number, default: 240 },
+  dotSize:      { type: Number, default: 12 },
+
+  boxWidth:     { type: Number, default: 400 },
+  boxOffset:    { type: Number, default: 40 },  
+
+  items: {
+    type: Array as PropType<ProjectItem[]>,
+    default: () => []
+  }
+});
+
+const topPad    = computed(() => props.dotSize / 2);
+const bottomPad = topPad;                               // gleicher Puffer unten
+
+const effectiveHeight = computed(() =>
+  props.items.length
+    ? (props.items.length - 1) * props.dotSpacing        // genau N‑1 Abstände
+    : props.height
+);
+
+const svgHeight = computed(() => effectiveHeight.value + topPad.value + bottomPad.value);
+
+const wavePath = computed(() => {
+  const seg = Math.max(props.items.length - 1, 1);
+  let d = `M 0 ${topPad.value}`;
+  for (let i = 0; i < seg; i++) {
+    const yStart = topPad.value + i * props.dotSpacing;
+    const yMid   = yStart + props.dotSpacing / 2;
+    const yEnd   = yStart + props.dotSpacing;
+    const dir    = i % 2 === 0 ? props.amplitude : -props.amplitude;
+    d += ` Q ${dir} ${yMid} 0 ${yEnd}`;
+  }
+  return d;
+});
+
+const boxes = computed(() =>
+  props.items.map((item, i) => ({
+    y:    topPad.value + i * props.dotSpacing,
+    side: item.typ
+      ? (item.typ === 'music' ? 'left' : 'right')
+      : (i % 2 === 0 ? 'left' : 'right'),
+    item
+  }))
+);
+
+</script>
+
 <template>
-  <div class="timeline">
-    <div
-      v-for="(ev, i) in events"
-      :key="i"
-      @click="setCurrentProject(ev.title, ev.description);"
+  <div class="relative flex justify-center">
+    <!-- Welle -->
+    <svg
+      :height="svgHeight"
+      :viewBox="`-${amplitude} 0 ${amplitude * 2} ${svgHeight}`"
+      class="text-[#303030]"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
     >
-      <div
-        v-if="ev.type == MUSIC"
-        class="timeline-item left-0 text-right relative w-1/2 py-4 px-8"
-      >
-        <div class="marker right-[-6px]" />
-        <div class="flex gap-1">
-          <div class="w-[100px] h-[100px] bg-blue-400">
-            <img src="/btn.png">
-          </div>
-          <div class="text-left">
-            <p class=" font-bold">
-              {{ ev.title }}
-            </p>
-            <span>
-              {{ ev.description }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div
-        v-else-if="ev.type == FILM"
-        class="timeline-item left-1/2 text-left relative w-1/2 py-4 px-8"
-      >
-        <div class="marker left-[-6px]" />
-        <div class="flex gap-1">
-          <div class="w-[60%] h-[60%]">
-            <img src="/yt.png">
-          </div>
-          <div class="text-left">
-            <p class=" font-bold">
-              {{ ev.title }}
-            </p>
-            <span>
-              {{ ev.description }}
-            </span>
-          </div>
-        </div>
-      </div>
+      <path
+        :d="wavePath"
+        stroke="currentColor"
+        stroke-width="3"
+      />
+      <!-- Dots -->
+      <path
+        :d="wavePath"
+        stroke="currentColor"
+        :stroke-width="dotSize"
+        :stroke-dasharray="`0 ${dotSpacing}`"
+        :stroke-dashoffset="dotSpacing"
+        stroke-linecap="round"
+      />
+
+    </svg>
+
+    <!-- Boxen -->
+    <div
+      v-for="(box, i) in boxes"
+      :key="i"
+      class="absolute -translate-y-1/2
+         w-[var(--box-width)] p-6 rounded-xl text-sm
+         bg-[#171717]
+         border-2 border-[#303030]
+         transition-all
+         cursor-pointer"
+      :style="{
+        '--box-width': `${boxWidth}px`,
+        top: `${box.y}px`,
+        left: box.side === 'left'
+          ? `calc(50% - ${boxOffset}px - ${boxWidth}px)`
+          : `calc(50% + ${boxOffset}px)`
+      }"
+    >
+      <ProjectsMusic
+        v-if="box.item.typ == 'music'"
+        :item="box.item"
+      />
+      <ProjectsFilm
+        v-else
+        :item="box.item"
+      />
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useCurrentProjectStore } from '~/stores/project';
-
-const MUSIC = 'music';
-const FILM = 'film';
-
-const { setCurrentProject } = useCurrentProjectStore();
-
-
-const events = [
-  { type: MUSIC, title: 'Lonnys toller song', date: '2025-01-02', description: 'asdfökljasdflö kasdjf klpasdj föklasdjf ' },
-  { type: FILM, title: 'Lonny film 1',   date: '2025-03-15', description: 'Erster Release'   },
-  { type: FILM, title: 'Lonny film 2',      date: '2025-06-01', description: 'Produktivgang'    },
-];
-</script>
-
-<style scoped>
-.timeline {
-  position: relative;
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-}
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 49.8%;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: #848484;
-}
-
-.marker {
-  position: absolute;
-  top: 1.25rem;
-  width: 12px;
-  height: 12px;
-  background: #848484;
-  border: 3px solid #848484; /* blau */
-  border-radius: 50%;
-  z-index: 2;
-}
-
-</style>

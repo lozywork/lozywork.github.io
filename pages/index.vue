@@ -1,13 +1,41 @@
 <template>
   <div>
     <Header />
-    <div class="content-body mx-auto flex min-h-screen max-w-4xl flex-col px-8 pb-20 gap-24">
+    <div class="content-body mx-auto flex min-h-screen max-w-6xl flex-col px-8 pb-20 gap-24">
       <Introduction />
-      <!--<div class="h-[600px] overflow-scroll no-scrollbar cursor-pointer">
-        
-      </div>-->
-      <Timeline />
-
+      <Timeline
+        :items="[
+          { 
+            name: 'Riff-2 Bootleg',
+            description: 'Original: Flawed Mangoes - Riff 2',
+            typ: 'music',
+            src: '/riff.mp3',
+            coverSrc: '/riff.png'
+          },
+          {
+            name: 'Design',
+            description: 'Wireframes, UI‑Konzept',
+            typ: 'film',
+            src: '/assets/video/design.mp4',
+            coverSrc: '/image.png'
+          },
+          {
+            name: 'Riff-2 Bootleg',
+            description: 'Original: Flawed Mangoes - Riff 2',
+            typ: 'music',
+            src: '/image.png',
+            coverSrc: '/image.png'
+          },
+          {
+            name: 'Riff-2 Bootleg',
+            description: 'Original: Flawed Mangoes - Riff 2',
+            typ: 'music',
+            src: '/image.png',
+            coverSrc: '/image.png'
+          },  
+        ]"
+        :dot-spacing="170"
+      />
       <Film />
       <Music />
       <Contact />
@@ -15,15 +43,3 @@
     </div>
   </div>
 </template>
-
-<style lang="scss">
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-</style>
