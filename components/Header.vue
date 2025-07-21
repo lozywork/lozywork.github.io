@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-50 bg-[#171717]/75 pt-6 pb-3 backdrop-blur-sm">
+  <header class="sticky top-0 z-50 bg-[#171717]/75 py-6 backdrop-blur-sm">
     <nav class="flex items-center justify-center">
       <ul class="flex gap-4 sm:gap-12">
         <li class="link default-hover">

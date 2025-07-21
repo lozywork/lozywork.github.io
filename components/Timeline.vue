@@ -1,14 +1,27 @@
 <script setup lang="ts">
 import { computed, type PropType } from 'vue';
 import { useCurrentProjectStore } from '~/stores/project';
+import { useMusicFlow } from 'vue-music-flow';
+import type { ProjectItem } from '~/types/project';
 
-export interface ProjectItem {
-  name: string;
-  description: string;
-  typ: 'music' | 'film';
-  src: string;
-  coverSrc: string;
+const { onPlaySingleTrack, togglePlayback, isPlaying } = useMusicFlow();
+const emit = defineEmits<{
+  (e: 'toggle-fullscreen', index: number | null): void
+}>();
+
+const expandedIndex = ref<number | null>(null);
+const fullScreen    = computed(() => expandedIndex.value !== null);
+
+/* Handler */
+function toggleFullscreen(i: number) {
+  expandedIndex.value = expandedIndex.value === i ? null : i;
+  emit('toggle-fullscreen', expandedIndex.value);   // ← an Parent feuern
 }
+
+watch(fullScreen, (fs) => {
+  document.documentElement.style.overflow = fs ? 'hidden' : '';
+});
+onUnmounted(() => { document.documentElement.style.overflow = ''; });
 
 const props = defineProps({
   height:       { type: Number, default: 600 },
@@ -63,7 +76,15 @@ const boxes = computed(() =>
 </script>
 
 <template>
-  <div class="relative flex justify-center">
+  <div
+    class="relative flex justify-center"
+  >
+    <div
+      v-if="fullScreen"
+      class="fixed inset-0 bg-black/70 backdrop-blur-sm
+             opacity-0 transition-opacity duration-300 pointer-events-none z-30"
+      :class="fullScreen ? 'opacity-60' : 'opacity-0'"
+    /> 
     <!-- Welle -->
     <svg
       :height="svgHeight"
@@ -93,23 +114,26 @@ const boxes = computed(() =>
     <div
       v-for="(box, i) in boxes"
       :key="i"
-      class="absolute -translate-y-1/2
-         w-[var(--box-width)] p-6 rounded-xl text-sm
-         bg-[#171717]
-         border-2 border-[#303030]
-         transition-all
-         cursor-pointer"
-      :style="{
-        '--box-width': `${boxWidth}px`,
-        top: `${box.y}px`,
-        left: box.side === 'left'
-          ? `calc(50% - ${boxOffset}px - ${boxWidth}px)`
-          : `calc(50% + ${boxOffset}px)`
-      }"
+      class="p-6 rounded-xl text-sm bg-[#171717] border-2 border-[#303030] transition-normal"
+      :class="[
+        fullScreen && expandedIndex === i
+          ? 'fixed top-[7%] left-[10%] z-40 w-[80%] h-[80%] overflow-y-auto'
+          : 'absolute -translate-y-1/2 w-[var(--box-width)]'
+      ]"
+      :style="fullScreen && expandedIndex === i
+        ? {}
+        : {
+          '--box-width': `${boxWidth}px`,
+          top: `${box.y}px`,
+          left: box.side === 'left'
+            ? `calc(50% - ${boxOffset}px - ${boxWidth}px)`
+            : `calc(50% + ${boxOffset}px)`
+        }"
     >
       <ProjectsMusic
-        v-if="box.item.typ == 'music'"
+        v-if="box.item.typ === 'music'"
         :item="box.item"
+        @toggle-fullscreen="toggleFullscreen(i)"
       />
       <ProjectsFilm
         v-else

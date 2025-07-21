@@ -1,4 +1,6 @@
-import type { ProjectItem } from '~/components/Timeline.vue';
+import { useMusicFlow } from 'vue-music-flow';
+import type { ProjectItem } from '~/types/project';
+const { onPlaySingleTrack } = useMusicFlow();
 
 export const useCurrentProjectStore = defineStore('current-project', {
   state: () => ({
@@ -7,13 +9,18 @@ export const useCurrentProjectStore = defineStore('current-project', {
   }),
   actions: {
     playMusic(item: ProjectItem): void {
-      if (this.audio != null && this.item.src == item.src) {
-        this.audio.play();
-      } else {
-        this.item = item;
-        this.audio = new Audio('/music' + item.src);
-        this.audio.play();
-      }
+      onPlaySingleTrack({
+        id: item.id,
+        audio: '/music' + item.src,
+        title: item.name,
+        artist: 'prodby.sassy',
+        artwork: '/music' + item.coverSrc,
+        original: {
+          source: '/music' + item.src,
+        },
+        album: ''
+      });
+      this.item = item;
     },
     pauseMusic(): void {
       this.audio?.pause();

@@ -11,7 +11,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { ProjectItem } from '../Timeline.vue';
+import type { ProjectItem } from '~/types/project';
+
 
 const props = defineProps({
   item: {
