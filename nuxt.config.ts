@@ -1,3 +1,5 @@
+import tailwindcss from '@tailwindcss/vite';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -8,8 +10,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  vite: {
+    plugins: [tailwindcss()],
+  },
   modules: [
-    '@nuxtjs/tailwindcss',
     'nuxt-icon',
     '@nuxtjs/eslint-module',
     '@nuxtjs/google-fonts',
@@ -25,6 +29,9 @@ export default defineNuxtConfig({
     },
   ],
 
+  musicFlow: {
+    isGlobal: true,        // auto‑import <MusicFlowPlayer/> & Co. überall
+  },
   googleFonts: {
     families: {
       Inter: [400, 500, 700], // Define the weights you need
