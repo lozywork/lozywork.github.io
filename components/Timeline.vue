@@ -1,91 +1,14 @@
-<script setup lang="ts">
-import { computed, type PropType } from 'vue';
-import { useCurrentProjectStore } from '~/stores/project';
-import { useMusicFlow } from 'vue-music-flow';
-import type { ProjectItem } from '~/types/project';
-
-const { onPlaySingleTrack, togglePlayback, isPlaying } = useMusicFlow();
-const emit = defineEmits<{
-  (e: 'toggle-fullscreen', index: number | null): void
-}>();
-
-const expandedIndex = ref<number | null>(null);
-const fullScreen    = computed(() => expandedIndex.value !== null);
-
-/* Handler */
-function toggleFullscreen(i: number) {
-  expandedIndex.value = expandedIndex.value === i ? null : i;
-  emit('toggle-fullscreen', expandedIndex.value);   // ← an Parent feuern
-}
-
-watch(fullScreen, (fs) => {
-  document.documentElement.style.overflow = fs ? 'hidden' : '';
-});
-onUnmounted(() => { document.documentElement.style.overflow = ''; });
-
-const props = defineProps({
-  height:       { type: Number, default: 600 },
-  amplitude:    { type: Number, default: 40 },
-  wavelength:   { type: Number, default: 120 },
-  dotSpacing:   { type: Number, default: 240 },
-  dotSize:      { type: Number, default: 12 },
-
-  boxWidth:     { type: Number, default: 400 },
-  boxOffset:    { type: Number, default: 40 },  
-
-  items: {
-    type: Array as PropType<ProjectItem[]>,
-    default: () => []
-  }
-});
-
-const topPad    = computed(() => props.dotSize / 2);
-const bottomPad = topPad;                               // gleicher Puffer unten
-
-const effectiveHeight = computed(() =>
-  props.items.length
-    ? (props.items.length - 1) * props.dotSpacing        // genau N‑1 Abstände
-    : props.height
-);
-
-const svgHeight = computed(() => effectiveHeight.value + topPad.value + bottomPad.value);
-
-const wavePath = computed(() => {
-  const seg = Math.max(props.items.length - 1, 1);
-  let d = `M 0 ${topPad.value}`;
-  for (let i = 0; i < seg; i++) {
-    const yStart = topPad.value + i * props.dotSpacing;
-    const yMid   = yStart + props.dotSpacing / 2;
-    const yEnd   = yStart + props.dotSpacing;
-    const dir    = i % 2 === 0 ? props.amplitude : -props.amplitude;
-    d += ` Q ${dir} ${yMid} 0 ${yEnd}`;
-  }
-  return d;
-});
-
-const boxes = computed(() =>
-  props.items.map((item, i) => ({
-    y:    topPad.value + i * props.dotSpacing,
-    side: item.typ
-      ? (item.typ === 'music' ? 'left' : 'right')
-      : (i % 2 === 0 ? 'left' : 'right'),
-    item
-  }))
-);
-
-</script>
-
 <template>
   <div
     class="relative flex justify-center"
   >
     <div
-      v-if="fullScreen"
+      v-if="fullScreenActive()"
       class="fixed inset-0 bg-black/70 backdrop-blur-sm
              opacity-0 transition-opacity duration-300 pointer-events-none z-30"
-      :class="fullScreen ? 'opacity-60' : 'opacity-0'"
+      :class="fullScreenActive() ? 'opacity-60' : 'opacity-0'"
     /> 
-    <!-- Welle -->
+    <!-- Wave -->
     <svg
       :height="svgHeight"
       :viewBox="`-${amplitude} 0 ${amplitude * 2} ${svgHeight}`"
@@ -114,13 +37,13 @@ const boxes = computed(() =>
     <div
       v-for="(box, i) in boxes"
       :key="i"
-      class="p-6 rounded-xl text-sm bg-[#171717] border-2 border-[#303030] transition-normal"
+      class="p-4 rounded-xl text-sm bg-[#171717] border-2 border-[#303030] transition-normal"
       :class="[
-        fullScreen && expandedIndex === i
+        isProjectFullscreen(box.item.id)
           ? 'fixed top-[7%] left-[10%] z-40 w-[80%] h-[80%] overflow-y-auto'
-          : 'absolute -translate-y-1/2 w-[var(--box-width)]'
+          : 'absolute -translate-y-1/2 w-[var(--box-width)] h-[150px]'
       ]"
-      :style="fullScreen && expandedIndex === i
+      :style="isProjectFullscreen(box.item.id)
         ? {}
         : {
           '--box-width': `${boxWidth}px`,
@@ -133,7 +56,7 @@ const boxes = computed(() =>
       <ProjectsMusic
         v-if="box.item.typ === 'music'"
         :item="box.item"
-        @toggle-fullscreen="toggleFullscreen(i)"
+        @toggle-fullscreen="toggleFullScreen(box.item.id)"
       />
       <ProjectsFilm
         v-else
@@ -142,3 +65,67 @@ const boxes = computed(() =>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed, type PropType } from 'vue';
+import type { ProjectItem } from '~/types/project';
+
+// Fullscreen logic //
+const { fullScreenActive, isProjectFullscreen, toggleFullScreen } = useCurrentProjectStore();
+watch(fullScreenActive, (fs) => {
+  document.documentElement.style.overflow = fs ? 'hidden' : '';
+});
+onUnmounted(() => { document.documentElement.style.overflow = ''; });
+
+// Props //
+const props = defineProps({
+  height:       { type: Number, default: 600 },
+  amplitude:    { type: Number, default: 40 },
+  wavelength:   { type: Number, default: 120 },
+  dotSpacing:   { type: Number, default: 260 },
+  dotSize:      { type: Number, default: 12 },
+
+  boxWidth:     { type: Number, default: 450 },
+  boxOffset:    { type: Number, default: 40 },  
+
+  items: {
+    type: Array as PropType<ProjectItem[]>,
+    default: () => []
+  }
+});
+
+// Timeline logic //
+const topPad = computed(() => props.dotSize / 2);
+const bottomPad = topPad;
+
+const effectiveHeight = computed(() =>
+  props.items.length
+    ? (props.items.length - 1) * props.dotSpacing
+    : props.height
+);
+
+const svgHeight = computed(() => effectiveHeight.value + topPad.value + bottomPad.value);
+
+const wavePath = computed(() => {
+  const seg = Math.max(props.items.length - 1, 1);
+  let d = `M 0 ${topPad.value}`;
+  for (let i = 0; i < seg; i++) {
+    const yStart = topPad.value + i * props.dotSpacing;
+    const yMid   = yStart + props.dotSpacing / 2;
+    const yEnd   = yStart + props.dotSpacing;
+    const dir    = i % 2 === 0 ? props.amplitude : -props.amplitude;
+    d += ` Q ${dir} ${yMid} 0 ${yEnd}`;
+  }
+  return d;
+});
+
+const boxes = computed(() =>
+  props.items.map((item, i) => ({
+    y:    topPad.value + i * props.dotSpacing,
+    side: item.typ
+      ? (item.typ === 'music' ? 'left' : 'right')
+      : (i % 2 === 0 ? 'left' : 'right'),
+    item
+  }))
+);
+</script>

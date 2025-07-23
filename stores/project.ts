@@ -6,6 +6,7 @@ export const useCurrentProjectStore = defineStore('current-project', {
   state: () => ({
     item: {} as ProjectItem,
     audio: null as HTMLAudioElement | null,
+    fullScreenID: null as number | null,
   }),
   actions: {
     playMusic(item: ProjectItem): void {
@@ -24,6 +25,19 @@ export const useCurrentProjectStore = defineStore('current-project', {
     },
     pauseMusic(): void {
       this.audio?.pause();
+    },
+    toggleFullScreen(id: number): void {
+      if (this.fullScreenID == id) {
+        this.fullScreenID = null;
+      } else {
+        this.fullScreenID = id;
+      }
+    },
+    isProjectFullscreen(id: number): boolean {
+      return this.fullScreenID == id;
+    },
+    fullScreenActive(): boolean {
+      return this.fullScreenID !== null;
     }
   },
   getters: {
