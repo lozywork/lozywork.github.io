@@ -1,12 +1,6 @@
 <template>
-  <div>
-    <Header />
-    <div class="content-body mx-auto flex min-h-screen max-w-3xl flex-col px-8 pb-20 gap-24">
-      <Introduction />
-      <Film />
-      <Music />
-      <Contact />
-      <Lozy />
-    </div>
+  <AppHeader />
+  <div class="py-14 relative z-50 bg-[#181818] h-96">
+
   </div>
 </template>
