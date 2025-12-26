@@ -1,0 +1,22 @@
+html,body, #__nuxt, #__layout{
+    height:100%!important;
+    width: 100%!important;
+}
+
+html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    background-color: #181818;
+    color: white;
+    font-family: NeueMontreal;
+}
+
+
+@font-face {
+    font-family: NeueMontreal;
+    src: url("/NeueMontreal-Regular.otf") format("opentype");
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
