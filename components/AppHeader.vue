@@ -11,25 +11,6 @@
         class="my-auto"
       /><span>LONNY ZEINDLER</span>
     </nuxt-link>
-    <!--<div>
-      <ul class="flex px-6 gap-10">
-        <li>
-          <nuxt-link to="/work">
-            Work
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/about">
-            About
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/contact">
-            Contact
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>-->
   </div>
   <div class="hanger z-50 hidden md:inline-block">
     <p class="pl-12 text-[18px]">
@@ -123,7 +104,7 @@ const scrollHandler = () => {
 
   if (arrow.value) {
     const scrollTop = window.scrollY;
-    const translateArrowY = scrollTop * -0.075 - 125;
+    const translateArrowY = scrollTop * -0.25 - 125;
     const rotationAngle = scrollTop * 0.1;
     arrow.value.style.top = `${translateArrowY}px`;
     arrow.value.style.transform = `rotate(${rotationAngle}deg)`;
