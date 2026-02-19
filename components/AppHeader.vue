@@ -76,12 +76,12 @@
       <span>Musician & Visual Creator</span>
     </span>
   </div>
-  <div class="h-[110%] w-full bg-[#999D9D] flex items-center relative">
+  <div class="h-[110%] w-full bg-[#181818] flex items-center relative">
     <div class="absolute top-[-5%] bottom-0 w-full h-full">
       <img
         ref="imageRef"
-        class="mx-auto object-cover h-[110%] -z-10"
-        src="/image.png"
+        class="mx-auto object-cover h-[100%] w-full blur-sm -z-10"
+        src="/images.jpg"
       >
     </div>
     <Name />
