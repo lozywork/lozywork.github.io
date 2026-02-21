@@ -278,8 +278,4 @@ onBeforeUnmount(() => {
   top: -250% !important;
   left: -250% !important;
 }
-
-html {
-  scroll-behavior: smooth;
-}
 </style>

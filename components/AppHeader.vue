@@ -2,20 +2,22 @@
   <div class="absolute w-full px-3 sm:px-10 py-10 top-0 left-0 z-50 flex justify-between text-lg">
     <nuxt-link
       ref="creator"
-      class="flex px-6 gap-2"
+      class="flex px-6 gap-2 group"
       to="/"
     >
       <Icon
         name="la:copyright"
         size="20"
-        class="my-auto"
-      /><span>LONNY ZEINDLER</span>
+        class="my-auto transition-transform duration-700 ease-out group-hover:rotate-180"
+      />
+      <span class="transition-all duration-500 ease-out group-hover:tracking-wider">LONNY ZEINDLER</span>
     </nuxt-link>
   </div>
+
   <div class="hanger z-50 hidden md:inline-block">
     <p class="pl-12 text-[18px]">
-      <span>Located</span><br>
-      <span>in Switzerland</span>
+      <span class="inline-block">Located</span><br>
+      <span class="inline-block">in Switzerland</span>
     </p>
     <svg
       width="auto"
@@ -55,32 +57,36 @@
         </g>
       </g>
     </svg>
-    <div class="digital-ball flex items-center">
+    <div class="digital-ball flex items-center group">
       <Icon
         name="ion:globe-outline"
         size="36"
-        class="m-auto"
+        class="m-auto transition-transform duration-1000 ease-out group-hover:rotate-[360deg]"
       />
     </div>
   </div>
-    
+
   <div class="hanger !right-0 w-fit hidden md:!flex flex-col gap-4 pr-5 xl:pr-28 text-5xl z-50 relative">
     <div
       ref="arrow"
-      class="absolute top-[-125px]"
+      class="absolute top-[-125px] opacity-60 transition-all duration-1000"
     >
-      <img src="../public/arrow.svg">
+      <img
+        src="../public/arrow.svg"
+        class="transition-all duration-1000"
+      >
     </div>
     <span class="text-4xl">
-      <span>Video Editing Intern</span><br>
-      <span>Musician & Visual Creator</span>
+      <span class="inline-block transition-transform duration-700 ease-out hover:translate-x-3">Video Editing Intern</span><br>
+      <span class="inline-block transition-transform duration-700 ease-out hover:translate-x-3">Musician & Visual Creator</span>
     </span>
   </div>
-  <div class="h-[110%] w-full bg-[#181818] flex items-center relative">
-    <div class="absolute top-[-5%] bottom-0 w-full h-full">
+
+  <div class="h-[105%] w-full bg-[#181818] flex items-center relative overflow-hidden">
+    <div class="absolute top-[-0.5%] bottom-0 w-full h-full">
       <img
         ref="imageRef"
-        class="mx-auto object-cover h-[100%] w-full blur-sm -z-10"
+        class="mx-auto object-cover h-[100%] w-full blur-sm -z-10 will-change-transform"
         src="/images.jpg"
       >
     </div>
@@ -91,42 +97,65 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 
-const imageRef = ref(null);
-const arrow = ref(null);
+const imageRef = ref<HTMLElement | null>(null);
+const arrow = ref<HTMLElement | null>(null);
 
-const scrollHandler = () => {
+let scrollY = 0;
+let rafId: number | null = null;
+
+let imageY = 0.05;
+let arrowY = -125;
+let arrowRotation = 0;
+let arrowOpacity = 1;
+
+const SMOOTHNESS = 0.08;
+
+const lerp = (start: number, end: number, t: number) =>
+  start + (end - start) * t;
+
+const onScroll = () => {
+  scrollY = window.scrollY;
+};
+
+const animate = () => {
+  const targetImageY = scrollY * 0.15;
+  const targetArrowY = scrollY * -0.15;
+  const targetRotation = scrollY * 0.05;
+  const targetOpacity = Math.max(0, 1 - scrollY / 500);
+
+  imageY = lerp(imageY, targetImageY, SMOOTHNESS);
+  arrowY = lerp(arrowY, targetArrowY, SMOOTHNESS);
+  arrowRotation = lerp(arrowRotation, targetRotation, SMOOTHNESS);
+  arrowOpacity = lerp(arrowOpacity, targetOpacity, SMOOTHNESS);
 
   if (imageRef.value) {
-    const scrollTop = window.scrollY;
-    const translateImageY = scrollTop * 0.25; 
-    imageRef.value.style.transform = `translateY(${translateImageY}px)`;
+    imageRef.value.style.transform = `translateY(${imageY}px)`;
   }
 
   if (arrow.value) {
-    const scrollTop = window.scrollY;
-    const translateArrowY = scrollTop * -0.25 - 125;
-    const rotationAngle = scrollTop * 0.1;
-    arrow.value.style.top = `${translateArrowY}px`;
-    arrow.value.style.transform = `rotate(${rotationAngle}deg)`;
+    arrow.value.style.transform = `
+      translateY(${arrowY}px)
+      rotate(${arrowRotation}deg)
+    `;
+    arrow.value.style.opacity = arrowOpacity.toString();
   }
 
+  rafId = requestAnimationFrame(animate);
 };
 
-
 onMounted(() => {
-  window.addEventListener('scroll', scrollHandler);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  rafId = requestAnimationFrame(animate);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', scrollHandler);
+  window.removeEventListener('scroll', onScroll);
+  if (rafId) cancelAnimationFrame(rafId);
 });
 </script>
 
-
 <style scoped lang="scss">
-
-.hanger
-{
+.hanger {
   height: fit-content;
   position: absolute;
   top: 50%;
@@ -134,7 +163,7 @@ onUnmounted(() => {
 }
 
 p {
- position: absolute;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
   margin: 0;
@@ -142,8 +171,7 @@ p {
   line-height: 1.2;
 }
 
-.digital-ball
-{
+.digital-ball {
   z-index: 500;
   position: absolute;
   right: 1.3em;
@@ -152,7 +180,37 @@ p {
   transform: translateY(-50%);
   width: 4.2em;
   height: 4.2em;
-
   background: transparent;
+  cursor: pointer;
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+.hanger {
+  animation: fadeInUp 1s ease-out;
 }
 </style>
