@@ -43,7 +43,7 @@
                 :src="project.image"
                 :alt="project.name"
                 class="w-full h-full object-cover scale-105"
-                style="filter: blur(3px) brightness(0.45);"
+                style="filter: brightness(0.45);"
                 loading="lazy"
               >
             </div>
@@ -137,35 +137,35 @@ const projectsBase = [
     name: 'Project One',
     subtitle: 'Web Design & Development',
     tags: [TAG.MUSIC],
-    image: '/projects/project-1.jpeg',
+    image: '/projects/barkley_edit.png',
   },
   {
     id: 2,
     name: 'Project Two',
     subtitle: 'Mobile Application',
     tags: [TAG.VIDEO],
-    image: '/images.jpg',
+    image: '/projects/maturaarbeit.png',
   },
   {
     id: 3,
     name: 'Project Three',
     subtitle: 'Brand Identity',
     tags: [TAG.THREED],
-    image: '/images.jpg',
+    image: '/projects/nba_remix_challenge.jpg',
   },
   {
     id: 4,
     name: 'Project Four',
     subtitle: 'UI/UX Research',
     tags: [TAG.MUSIC, TAG.VIDEO],
-    image: '/images.jpg',
+    image: '/projects/old_school_tv.png',
   },
   {
     id: 5,
     name: 'Project Five',
     subtitle: 'Creative Direction',
     tags: [TAG.VIDEO, TAG.MUSIC],
-    image: '/images.jpg',
+    image: '/projects/troy_resounded.png',
   },
 ];
 
