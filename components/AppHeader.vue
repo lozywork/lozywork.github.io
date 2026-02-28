@@ -87,7 +87,7 @@
       <img
         ref="imageRef"
         class="mx-auto object-cover h-[100%] w-full -z-10 will-change-transform"
-        src="/lozy.jpeg"
+        src="/lozy.png"
       >
     </div>
     <Name />
