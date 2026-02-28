@@ -86,8 +86,8 @@
     <div class="absolute top-[-0.5%] bottom-0 w-full h-full">
       <img
         ref="imageRef"
-        class="mx-auto object-cover h-[100%] w-full blur-sm -z-10 will-change-transform"
-        src="/images.jpg"
+        class="mx-auto object-cover h-[100%] w-full -z-10 will-change-transform"
+        src="/lozy.jpeg"
       >
     </div>
     <Name />
