@@ -9,8 +9,9 @@
           ref="textBlock"
           class="text-5xl leading-snug font-semibold text-white/10 select-none"
         >
+          <!--TODO: fix text formatting-->
           <span 
-            v-for="(char, index) in textArray" 
+            v-for="(char, index) in textArray"
             :key="index" 
             class="char"
           >{{ char }}</span>
@@ -30,7 +31,7 @@ gsap.registerPlugin(ScrollTrigger);
 const container = ref(null);
 const textBlock = ref(null);
 
-const rawText = 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.';
+const rawText = 'Hi, I am Lonny Zeindler. Under the moniker Lozy Work, I explore the intersection of cinematic storytelling, music production, 3D animation, and coding. Every project is a creative process of trialing new techniques, experimenting, and combining my skills to produce high-quality digital art.';
 
 const textArray = computed(() => rawText.split(''));
 

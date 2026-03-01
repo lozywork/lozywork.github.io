@@ -1,16 +1,17 @@
 <template>
   <div class="absolute bottom-24 w-full text-white">
     <div class="marquee">
+      <!-- Second element is aria-hidden since it's a pure visual duplicate -->
       <h1
-        ref="marquee_1"
+        ref="marquee1"
         class="marquee__content"
       >
         Lonny Zeindler -
       </h1>
       <h1
-        ref="marquee_2"
-        aria-hidden="true"
+        ref="marquee2"
         class="marquee__content"
+        aria-hidden="true"
       >
         Lonny Zeindler -
       </h1>
@@ -18,28 +19,37 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.pauseMarqueeAnimation();
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  methods: {
-    pauseMarqueeAnimation() {
-      this.$refs.marquee_1.style.animationPlayState = 'paused';
-      this.$refs.marquee_2.style.animationPlayState = 'paused';
-    },
-    handleScroll() {
-      const scrollPosition = window.scrollY || window.pageYOffset;
-      const reverseTranslation = -scrollPosition % window.innerWidth; 
-      this.$refs.marquee_1.style.transform = `translateX(${reverseTranslation}px)`;
-      this.$refs.marquee_2.style.transform = `translateX(${reverseTranslation}px)`;
-    },
-  },
-};
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
+
+// ─── Refs ─────────────────────────────────────────────────────────────────────
+
+const marquee1 = ref<HTMLElement | null>(null);
+const marquee2 = ref<HTMLElement | null>(null);
+
+// ─── Scroll-driven Translation ────────────────────────────────────────────────
+
+// Instead of auto-scrolling, the marquee is driven entirely by scroll position.
+// We pause the CSS animation and manually translate both elements in sync.
+function handleScroll() {
+  const offset = -(window.scrollY % window.innerWidth);
+  if (marquee1.value) marquee1.value.style.transform = `translateX(${offset}px)`;
+  if (marquee2.value) marquee2.value.style.transform = `translateX(${offset}px)`;
+}
+
+// ─── Lifecycle ────────────────────────────────────────────────────────────────
+
+onMounted(() => {
+  // Pause the CSS marquee animation — scroll takes over from here
+  if (marquee1.value) marquee1.value.style.animationPlayState = 'paused';
+  if (marquee2.value) marquee2.value.style.animationPlayState = 'paused';
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style scoped lang="scss">
@@ -63,8 +73,7 @@ export default {
 }
 
 h1 {
-    font-size: max(14vw);
-    line-height: normal;
+  font-size: max(14vw);
+  line-height: normal;
 }
 </style>
-
