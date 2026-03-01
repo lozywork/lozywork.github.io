@@ -61,8 +61,9 @@
     <div class="absolute top-[-0.5%] bottom-0 w-full h-full">
       <img
         ref="imageRef"
+        src="/lozy.webp"
+        fetchpriority="high"
         class="mx-auto object-cover h-[100%] w-full -z-10 will-change-transform"
-        src="/lozy.png"
       >
     </div>
     <Name />

@@ -11,4 +11,11 @@ export default defineNuxtConfig({
       path: '~/components',
     },
   ],
+  routeRules: {
+    '/lozy.webp': {
+      headers: {
+        'Cache-Control': 'public, max-age=31536000, immutable',
+      },
+    },
+  },
 });
