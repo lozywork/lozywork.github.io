@@ -5,7 +5,7 @@
       ref="wrapperEl"
       class="w-full h-screen flex flex-col"
     >
-      <h1 class="text-6xl font-bold p-8 pl-32 tracking-tight shrink-0">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold pt-0 p-8 pl-22 sm:pl-20 md:pl-24 lg:pl-28 xl:pl-32 tracking-tight shrink-0">
         Some of my <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-orange-300">work</span>
       </h1>
 
@@ -17,11 +17,11 @@
           <div
             v-for="(project, index) in projects"
             :key="project.id"
-            class="panel group absolute inset-0 mx-32 mb-5 rounded-3xl bg-transparent overflow-hidden cursor-pointer isolate"
+            class="panel group absolute inset-0 mx-3 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-32 mb-3 sm:mb-4 xl:mb-5 rounded-2xl xl:rounded-3xl bg-transparent overflow-hidden cursor-pointer isolate"
             :style="{ '--color-from': project.colorFrom, '--color-to': project.colorTo, zIndex: index + 1 }"
           >
             <!-- Gradient border glow — moves from bottom-right to top-left on hover -->
-            <div class="absolute inset-0 rounded-3xl overflow-hidden z-0">
+            <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden z-0">
               <div
                 class="gradient-circle absolute rounded-full transition-[top,left] duration-700 ease-out will-change-transform"
                 :style="{
@@ -35,10 +35,10 @@
             </div>
 
             <!-- Dark inset background sitting above the glow -->
-            <div class="absolute inset-[3px] rounded-3xl bg-[#181818] z-[1]" />
+            <div class="absolute inset-[3px] rounded-2xl xl:rounded-3xl bg-[#181818] z-[1]" />
 
             <!-- Project image -->
-            <div class="absolute inset-[3px] rounded-[22px] overflow-hidden z-[2]">
+            <div class="absolute inset-[3px] rounded-[18px] xl:rounded-[22px] overflow-hidden z-[2]">
               <img
                 :src="project.image"
                 :alt="project.name"
@@ -49,9 +49,9 @@
             </div>
 
             <!-- Arrow icon shown on hover -->
-            <div class="absolute top-0 right-0 w-28 h-28 overflow-hidden pointer-events-auto z-[3]">
+            <div class="absolute top-0 right-0 w-14 h-14 sm:w-20 sm:h-20 xl:w-28 xl:h-28 overflow-hidden pointer-events-auto z-50">
               <svg
-                class="absolute z-20 w-12 h-12 text-white opacity-0 group-hover:opacity-100
+                class="absolute z-20 w-7 h-7 sm:w-9 sm:h-9 xl:w-12 xl:h-12 text-white opacity-0 group-hover:opacity-100
                   top-1/2 left-1/2
                   -translate-x-[calc(50%+8px)] -translate-y-[calc(50%-8px)]
                   group-hover:-translate-x-1/2 group-hover:-translate-y-1/2
@@ -74,13 +74,13 @@
             </div>
 
             <!-- Project info card -->
-            <div class="absolute inset-0 p-8 flex justify-between items-end h-full z-10 pointer-events-none">
-              <div class="w-1/2 p-5 pt-6 pb-4 flex flex-col rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 text-gray-200 self-stretch pointer-events-auto">
-                <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <div class="absolute inset-0 p-3 sm:p-5 xl:p-8 flex justify-between items-end h-full z-10 pointer-events-none">
+              <div class="w-full sm:w-3/4 md:w-2/3 xl:w-1/2 p-3 sm:p-4 xl:p-5 xl:pt-6 xl:pb-4 flex flex-col rounded-xl xl:rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 text-gray-200 self-stretch pointer-events-auto">
+                <div class="flex items-center gap-1.5 sm:gap-2 mb-1 flex-wrap">
                   <span
                     v-for="tag in [...project.tags].sort()"
                     :key="tag"
-                    class="text-[10px] font-bold tracking-widest px-2 py-0.5 rounded-full"
+                    class="text-[9px] sm:text-[10px] font-bold tracking-widest px-1.5 sm:px-2 py-0.5 rounded-full"
                     :style="{
                       background: `linear-gradient(90deg, ${getProjectColors([tag]).from}55, ${getProjectColors([tag]).to}55)`,
                       color: getProjectColors([tag]).to,
@@ -89,15 +89,15 @@
                     {{ tag }}
                   </span>
                 </div>
-                <span class="text-3xl font-bold leading-tight mt-1">{{ project.name }}</span>
-                <span class="text-xs text-gray-400 tracking-widest uppercase mt-1">{{ project.subtitle }}</span>
+                <span class="text-lg sm:text-xl md:text-2xl xl:text-3xl font-bold leading-tight mt-1">{{ project.name }}</span>
+                <span class="text-[10px] sm:text-xs text-gray-400 tracking-widest uppercase mt-1">{{ project.subtitle }}</span>
                 <span
-                  class="text-lg mt-3 whitespace-pre-line text-gray-400"
+                  class="text-sm sm:text-base xl:text-lg mt-2 xl:mt-3 whitespace-pre-line text-gray-400"
                   v-html="project.description"
                 />
-                <div class="mt-auto flex items-center justify-between">
-                  <span class="text-xs text-gray-500">{{ String(index + 1).padStart(2, '0') }} / {{ String(projects.length).padStart(2, '0') }}</span>
-                  <span class="text-xs text-gray-500">2025</span>
+                <div class="mt-auto pt-2 xl:pt-0 flex items-center justify-between">
+                  <span class="text-[10px] sm:text-xs text-gray-500">{{ String(index + 1).padStart(2, '0') }} / {{ String(projects.length).padStart(2, '0') }}</span>
+                  <span class="text-[10px] sm:text-xs text-gray-500">2025</span>
                 </div>
               </div>
             </div>
@@ -255,8 +255,8 @@ onMounted(() => {
       });
 
       panels.slice(1).forEach((panel, i) => {
-        tl.to(panel, { yPercent: 52.5, ease: 'none' }, i);         // slide into view
-        tl.to(panel, { yPercent: 0, scale: 0.92, ease: 'none' }, i + 0.5); // settle in place
+        tl.to(panel, { yPercent: 52.5, ease: 'none' }, i);
+        tl.to(panel, { yPercent: 0, scale: 0.92, ease: 'none' }, i + 0.5);
       });
 
       requestAnimationFrame(() => ScrollTrigger.refresh());

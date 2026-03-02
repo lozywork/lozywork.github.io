@@ -1,8 +1,8 @@
 <template>
   <!-- Top navigation bar -->
-  <div class="absolute w-full px-3 sm:px-10 py-10 top-0 left-0 z-50 flex justify-between text-lg">
+  <div class="absolute w-full px-3 sm:px-10 py-10 top-0 left-0 z-50 flex justify-between text-lg text-black lg:text-white">
     <nuxt-link
-      class="flex px-6 gap-2 group"
+      class="flex px-1 lg:px-6 gap-2 group"
       to="/"
     >
       <Icon

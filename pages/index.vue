@@ -2,5 +2,4 @@
   <AppHeader />
   <Introduction />
   <Projects />
-  <Introduction />
 </template>
