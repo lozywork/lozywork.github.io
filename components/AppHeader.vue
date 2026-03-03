@@ -10,7 +10,7 @@
         size="20"
         class="my-auto transition-transform duration-700 ease-out group-hover:rotate-180"
       />
-      <span class="transition-all duration-500 ease-out group-hover:tracking-wider">LONNY ZEINDLER</span>
+      <span class="transition-all duration-500 ease-out group-hover:tracking-wider">LOZY WORK</span>
     </nuxt-link>
   </div>
 

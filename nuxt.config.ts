@@ -18,4 +18,17 @@ export default defineNuxtConfig({
       },
     },
   },
+  app: {
+    head: {
+      title: 'Lonny Zeindler',
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png', // Specify the image type as PNG
+          href: '/logo.png' // Path relative to the public directory
+        }
+      ]
+    }
+    
+  }
 });
