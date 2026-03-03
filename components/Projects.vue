@@ -17,8 +17,9 @@
           <div
             v-for="(project, index) in projects"
             :key="project.id"
-            class="panel group absolute inset-0 mx-3 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-32 mb-3 sm:mb-4 xl:mb-5 rounded-2xl xl:rounded-3xl bg-transparent overflow-hidden cursor-pointer isolate"
+            class="panel group absolute inset-0 mx-3 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-32 mb-3 sm:mb-4 xl:mb-5 rounded-2xl xl:rounded-3xl bg-transparent overflow-hidden isolate cursor-pointer"
             :style="{ '--color-from': project.colorFrom, '--color-to': project.colorTo, zIndex: index + 1 }"
+            @click="project.link && openLink(project.link)"
           >
             <!-- Gradient border glow — moves from bottom-right to top-left on hover -->
             <div class="absolute inset-0 rounded-2xl xl:rounded-3xl overflow-hidden z-0">
@@ -135,6 +136,13 @@ function getProjectColors(tags: TAG[]) {
   return tags.length === 1 ? TAG_COLORS[tags[0]] : MIXED_TAG_COLOR;
 }
 
+// ─── Link Handler ─────────────────────────────────────────────────────────────
+
+function openLink(url: string) {
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+
 // ─── Project Data ─────────────────────────────────────────────────────────────
 
 const projectsBase = [
@@ -145,6 +153,7 @@ const projectsBase = [
     description: 'For this project, a friend and I entered the official <strong>NBA 2K x E-40 Remix Challenge</strong>. We engineered the beat in <strong>Logic Pro</strong> to hit hard and stay catchy, taking inspiration from the iconic 2K soundtracks.\n\n To promote the track, I used <strong>Final Cut Pro</strong> to create a rhythmic edit. I synced top-tier NBA plays to our custom transitions and bass drops, ensuring the visual energy matched the audio\'s intensity.',
     tags: [TAG.MUSIC, TAG.VIDEO],
     image: '/projects/nba_remix_challenge.webp',
+    link: 'https://www.instagram.com/reel/DE2IxdeNWnm/?igsh=b2h2MW0wNzR4eDRw'
   },
   {
     id: 2,
@@ -153,6 +162,7 @@ const projectsBase = [
     description: 'Inspired by the wave of NFL edits during the 2024 season, I wanted to create a definitive tribute to Saquon Barkley\'s record-breaking year. After he surpassed 2,000 rushing yards and secured Offensive Player of the Year honors, I gathered the best game film to showcase his explosiveness.\n\nUsing <strong>Final Cut Pro</strong>, I moved beyond simple cutting and focused heavily on custom visual filters and color grading to give the footage a cinematic, "premium" feel. To ensure the edit was 100% unique, I produced an <strong>original beat</strong> specifically for this video, allowing me to time every move to the rhythm of my own music.',
     tags: [TAG.MUSIC, TAG.VIDEO],
     image: '/projects/barkley_edit.webp',
+    link: 'https://www.instagram.com/reel/DOMBw4iDKZa/?igsh=dGllc245NHEzeHNy'
   },
   {
     id: 3,
@@ -161,6 +171,7 @@ const projectsBase = [
     description: 'Sidelined by an injury with the <strong>Winterthur Warriors</strong>, I used my recovery to deep-dive into cinema psychology. I handled the entire production: from researching and scriptwriting to capturing live-action footage during games and training.\n\nAs a "one-man crew", I managed the full edit in Final Cut Pro and directed a professional voiceover session in Logic Pro. This project was a masterclass in filmmaking "rules," forcing me to balance the roles of director, cinematographer, and editor simultaneously.',
     tags: [TAG.MUSIC, TAG.VIDEO],
     image: '/projects/maturaarbeit.webp',
+    link: 'https://youtu.be/9VUrXeQQ7Bs?si=RXdSAT7zI5JHEp_R'
   },
   {
     id: 4,
@@ -169,6 +180,7 @@ const projectsBase = [
     description: 'Inspiration struck when I saw a vintage metal sign featuring a classic TV set. I decided to recreate that aesthetic in 3D space using <strong>Blender</strong>. Since this was my first real dive into the software, I had to learn the fundamentals of 3D modeling from the ground up—shaping the geometry of the TV and experimenting with lighting to capture that nostalgic, retro glow.\n\nAs a beginner, the biggest hurdle was understanding <strong>Materials and Texturing</strong>. Learning how to make plastic look like plastic and glass look like a screen—while also managing the keyframes for the animation—was a massive "level-up" moment for my technical skills.',
     tags: [TAG.THREED],
     image: '/projects/old_school_tv.webp',
+    link: 'https://youtu.be/Pd0KQHxI0CQ?si=nt5ZSJCZ9Ojk7Hqb'
   },
   {
     id: 5,
@@ -176,6 +188,7 @@ const projectsBase = [
     subtitle: 'Creative Direction',
     tags: [TAG.VIDEO, TAG.MUSIC],
     image: '/projects/troy_resounded.webp',
+    link: 'https://youtu.be/w47jHl_anqc?si=hQEGCu5SVAo6nb3i'
   },
 ];
 
