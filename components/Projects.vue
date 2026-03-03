@@ -5,7 +5,7 @@
       ref="wrapperEl"
       class="w-full h-screen flex flex-col"
     >
-      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold pt-0 p-8 pl-22 sm:pl-20 md:pl-24 lg:pl-28 xl:pl-32 tracking-tight shrink-0">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold p-8 pl-22 sm:pl-20 md:pl-24 lg:pl-28 xl:pl-32 tracking-tight shrink-0">
         Some of my <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-orange-300">work</span>
       </h1>
 
@@ -42,6 +42,7 @@
               <img
                 :src="project.image"
                 :alt="project.name"
+                fetchpriority="high"
                 class="w-full h-full object-cover scale-105"
                 style="filter: brightness(0.45);"
                 loading="lazy"
@@ -128,7 +129,7 @@ const TAG_COLORS: Record<TAG, { from: string; to: string }> = {
 };
 
 // Fallback color used when a project has multiple tags
-const MIXED_TAG_COLOR = { from: '#6b7280', to: '#111827' };
+const MIXED_TAG_COLOR = { from: '#e879f9', to: '#06b6d4' };
 
 function getProjectColors(tags: TAG[]) {
   return tags.length === 1 ? TAG_COLORS[tags[0]] : MIXED_TAG_COLOR;
@@ -140,41 +141,41 @@ const projectsBase = [
   {
     id: 1,
     name: 'NBA 2K x E-40 Remix',
-    subtitle: 'A high-energy "Promo Edit" combining custom beat production with fast-paced basketball highlights.',
+    subtitle: 'A high-energy "Promo Edit" combining custom beat production with fast-paced basketball highlights',
     description: 'For this project, a friend and I entered the official <strong>NBA 2K x E-40 Remix Challenge</strong>. We engineered the beat in <strong>Logic Pro</strong> to hit hard and stay catchy, taking inspiration from the iconic 2K soundtracks.\n\n To promote the track, I used <strong>Final Cut Pro</strong> to create a rhythmic edit. I synced top-tier NBA plays to our custom transitions and bass drops, ensuring the visual energy matched the audio\'s intensity.',
     tags: [TAG.MUSIC, TAG.VIDEO],
-    image: '/projects/nba_remix_challenge.jpg',
+    image: '/projects/nba_remix_challenge.webp',
   },
   {
     id: 2,
     name: 'Saquon Barkley: 2K Royalty',
-    subtitle: 'A high-energy sports tribute edit celebrating Saquon Barkley\'s historic 2024 MVP-caliber season and the Eagles\' Super Bowl victory.',
+    subtitle: 'A high-energy sports tribute edit celebrating Saquon Barkley\'s historic 2024 MVP-caliber season and the Eagles\' Super Bowl victory',
     description: 'Inspired by the wave of NFL edits during the 2024 season, I wanted to create a definitive tribute to Saquon Barkley\'s record-breaking year. After he surpassed 2,000 rushing yards and secured Offensive Player of the Year honors, I gathered the best game film to showcase his explosiveness.\n\nUsing <strong>Final Cut Pro</strong>, I moved beyond simple cutting and focused heavily on custom visual filters and color grading to give the footage a cinematic, "premium" feel. To ensure the edit was 100% unique, I produced an <strong>original beat</strong> specifically for this video, allowing me to time every move to the rhythm of my own music.',
     tags: [TAG.MUSIC, TAG.VIDEO],
-    image: '/projects/barkley_edit.png',
+    image: '/projects/barkley_edit.webp',
   },
   {
     id: 3,
-    name: 'To Become a Warrior: A Matura Film Study',
-    subtitle: 'A 10-minute documentary and theoretical thesis exploring how "Film Language" influences an audience and can be used as propaganda.',
-    description: 'While sidelined by an injury with the <strong>Winterthur Warriors</strong> American Football team, I turned my recovery time into a creative deep dive. I spent months researching the psychology of cinema before putting my theories to the test. I handled every stage of production: writing the script, capturing live-action footage during games and training sessions, and managing the full edit and post-production in <strong>Final Cut Pro</strong>.\n\nTo achieve a professional narrative feel, I directed a voiceover session in <strong>Logic Pro</strong>, collaborating with a voice actor to bring the script to life. This was my first "one-man crew" experience, forcing me to master scriptwriting and cinematography from scratch while rapidly advancing my technical post-production skills.',
+    name: 'To Become a Warrior',
+    subtitle: 'A 10-minute documentary and theoretical thesis exploring how "Film Language" influences an audience and can be used as propaganda',
+    description: 'Sidelined by an injury with the <strong>Winterthur Warriors</strong>, I used my recovery to deep-dive into cinema psychology. I handled the entire production: from researching and scriptwriting to capturing live-action footage during games and training.\n\nAs a "one-man crew", I managed the full edit in Final Cut Pro and directed a professional voiceover session in Logic Pro. This project was a masterclass in filmmaking "rules," forcing me to balance the roles of director, cinematographer, and editor simultaneously.',
     tags: [TAG.MUSIC, TAG.VIDEO],
-    image: '/projects/maturaarbeit.png',
+    image: '/projects/maturaarbeit.webp',
   },
   {
     id: 4,
-    name: 'The Retro Tube: 3D Animation',
-    subtitle: 'A stylized 3D animation of an "old school" vintage television, designed to serve as a custom intro for my YouTube channel.',
-    description: 'Inspiration struck when I saw a vintage metal sign featuring a classic TV set. I decided to recreate that aesthetic in 3D space using <strong>Blender</strong>. Since this was my first real dive into the software, I had to learn the fundamentals of 3D modeling from the ground up—shaping the geometry of the TV and experimenting with lighting to capture that nostalgic, retro glow.\n\n<strong>The Challenge:</strong> As a beginner, the biggest hurdle was understanding <strong>Materials and Texturing</strong>. Learning how to make plastic look like plastic and glass look like a screen—while also managing the keyframes for the animation—was a massive "level-up" moment for my technical skills.',
+    name: 'The Retro Tube',
+    subtitle: 'A stylized 3D animation of an "old school" vintage television, designed to serve as a custom intro for my YouTube channel',
+    description: 'Inspiration struck when I saw a vintage metal sign featuring a classic TV set. I decided to recreate that aesthetic in 3D space using <strong>Blender</strong>. Since this was my first real dive into the software, I had to learn the fundamentals of 3D modeling from the ground up—shaping the geometry of the TV and experimenting with lighting to capture that nostalgic, retro glow.\n\nAs a beginner, the biggest hurdle was understanding <strong>Materials and Texturing</strong>. Learning how to make plastic look like plastic and glass look like a screen—while also managing the keyframes for the animation—was a massive "level-up" moment for my technical skills.',
     tags: [TAG.THREED],
-    image: '/projects/old_school_tv.png',
+    image: '/projects/old_school_tv.webp',
   },
   {
     id: 5,
-    name: 'Project Five',
+    name: 'Cinematic Re-Scoring: Troy',
     subtitle: 'Creative Direction',
     tags: [TAG.VIDEO, TAG.MUSIC],
-    image: '/projects/troy_resounded.png',
+    image: '/projects/troy_resounded.webp',
   },
 ];
 
