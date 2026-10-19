@@ -21,6 +21,10 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Lonny Zeindler',
+      htmlAttrs: { lang: 'en' },
+      meta: [
+        { name: 'description', content: 'Lonny Zeindler, Media Informatics student at BHT Berlin. Video editing, music production and 3D.' }
+      ],
       link: [
         {
           rel: 'icon',

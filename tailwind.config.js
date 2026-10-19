@@ -11,5 +11,9 @@ module.exports = {
   theme: {
     extend: {},
   },
+  // The site's own reset in assets/css/main.scss replaces Tailwind's.
+  corePlugins: {
+    preflight: false,
+  },
   plugins: [],
 };
