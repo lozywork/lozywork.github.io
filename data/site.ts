@@ -119,7 +119,7 @@ export const site: Site = {
     statement: 'I’m Lonny, a first-year Media Informatics student at BHT Berlin. Next to my studies I work for CISTEC AG in Zürich as a marketing assistant and video editor.',
     facts: [
       { label: 'Studying', value: 'B.Sc. Media Informatics, BHT Berlin' },
-      { label: 'Working', value: 'CISTEC AG, Zürich' },
+      { label: 'Working experience', value: 'Video editing, UX Design & Marketing assistant' },
       { label: 'Makes', tags: ['video', 'music', '3d'] },
     ],
   },
@@ -173,6 +173,7 @@ export const site: Site = {
       clip: 'Marketing Assistant',
       tooltip: 'Marketing Assistant, CISTEC AG',
       start: '2026-01',
+      end: '2026-09'
     },
     {
       id: 'vid',
@@ -180,7 +181,8 @@ export const site: Site = {
       org: 'CISTEC AG, Zürich',
       clip: 'Video Editor, UX design',
       tooltip: 'Video Editor, UX design, CISTEC AG',
-      start: '2026-04', // placeholder
+      start: '2025-09',
+      end: '2026-09'
     },
   ],
 
