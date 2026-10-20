@@ -5,7 +5,6 @@ import { reducedMotion } from '~/utils/motion';
 
 const hero = ref<HTMLElement | null>(null);
 const photo = ref<HTMLImageElement | null>(null);
-const track = ref<HTMLElement | null>(null);
 
 let stop: (() => void) | undefined;
 
@@ -13,15 +12,10 @@ onMounted(() => {
   if (reducedMotion()) return;
   const section = hero.value!;
   const img = photo.value!;
-  const marquee = track.value!;
 
   let sy = window.scrollY;
   let iy = sy * 0.15;
-  let w = 0;
   let raf = 0;
-  const measure = () => {
-    w = (marquee.firstElementChild as HTMLElement).offsetWidth;
-  };
   const onScroll = () => {
     sy = window.scrollY;
   };
@@ -29,21 +23,16 @@ onMounted(() => {
     if (sy < section.offsetHeight + 200) {
       iy += (sy * 0.15 - iy) * 0.08;
       img.style.transform = `translate3d(0, ${iy.toFixed(2)}px, 0)`;
-      if (w) marquee.style.transform = `translate3d(${-(sy % w)}px, 0, 0)`;
     }
     raf = requestAnimationFrame(frame);
   };
 
-  measure();
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', measure);
-  document.fonts?.ready.then(measure);
   raf = requestAnimationFrame(frame);
 
   stop = () => {
     cancelAnimationFrame(raf);
     window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', measure);
   };
 });
 
@@ -110,7 +99,6 @@ onBeforeUnmount(() => stop?.());
       <div class="marquee">
         <div
           id="marquee"
-          ref="track"
           class="marquee-track"
         >
           <span
@@ -198,6 +186,12 @@ onBeforeUnmount(() => stop?.());
 .hero-name { position: relative; z-index: 2; margin-bottom: clamp(28px, 4vw, 64px); }
 .marquee { overflow: hidden; user-select: none; }
 .marquee-track { display: flex; width: max-content; will-change: transform; }
+/* A scroll handler lags the finger on iOS; a scroll timeline runs on the compositor.
+   Without scroll timelines the animation would play at 0s and park the name 1300px left. */
+@supports (animation-timeline: scroll()) {
+  .marquee-track { animation: marquee linear both; animation-timeline: scroll(root); animation-range: 0 1300px; }
+}
+@keyframes marquee { to { transform: translate3d(-1300px, 0, 0); } }
 .marquee-track span {
   font-size: 12.5vw; line-height: 1.02; letter-spacing: -.02em; white-space: nowrap; padding-right: .22em;
   color: #fff;
