@@ -116,7 +116,7 @@ export const site: Site = {
   },
 
   about: {
-    statement: 'I’m Lonny, a first-year Media Informatics student at BHT Berlin. Next to my studies I work for CISTEC AG in Zürich as a marketing assistant and video editor.',
+    statement: 'I’m Lonny, a first-year Media Informatics student at BHT Berlin. Before my studies I worked for CISTEC AG in Zürich as a marketing assistant and video editor.',
     facts: [
       { label: 'Studying', value: 'B.Sc. Media Informatics, BHT Berlin' },
       { label: 'Working experience', value: 'Video editing, UX Design & Marketing assistant' },
