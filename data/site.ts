@@ -209,6 +209,22 @@ export const site: Site = {
 
   projects: [
     {
+      id: 'gta-lets-play',
+      name: "Lusor Koeffizient - GTA V Let's Play",
+      image: '/projects/gta_lets_play.webp',
+      tags: ['video'],
+      subtitle: "I had the opportunity to edit an action-packed GTA V Let's Play for the YouTuber duo Lusor Koeffizient.",
+      description: [
+        "Since this is the first full-length Let's Play I've edited, the primary focus was placed on strong storytelling, engaging racing pacing, and building a compelling narrative arc. The edit captures the chaotic stunts, emotional crashouts, and group dynamics while keeping viewers hooked from start to finish.",
+        "The biggest challenge was sifting through over an hour of raw footage to handpick the most entertaining moments and structure them tightly. This required constant editorial choices on when to switch between the different players' perspectives to maximize clarity and excitement, all while matching the right style of music to the cuts.",
+        "Beyond the technical edit, the video's strong reach brought in a lot of constructive feedback, helping me recognize room for improvement in how I layer and balance music overlays for this specific style of gaming content. Taking away clear insights like this is a huge driver for leveling up my future cuts.",
+      ],
+      tools: 'Final Cut Pro',
+      year: '2026',
+      link: 'https://youtu.be/0XY74RUCRvI',
+      where: 'YouTube',
+    },
+    {
       id: 'nba-remix',
       name: 'NBA 2K x E-40 Remix',
       image: '/projects/nba_remix_challenge.webp',
