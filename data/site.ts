@@ -110,9 +110,9 @@ export const site: Site = {
     intro: { marker: 'Intro' },
     about: { marker: 'About', title: 'About me' },
     programs: { marker: 'Tools', title: 'Tools and languages', caption: 'Levels are self-assessed.' },
-    services: { marker: 'Services', title: 'Services', caption: 'Pick a service to see what I do and how.' },
+    services: { marker: 'Services', title: 'Services' },
     career: { marker: 'Career', title: 'Career and education' },
-    projects: { marker: 'Projects', title: 'Selected projects', caption: 'Pick a project to see what I did on it.' },
+    projects: { marker: 'Projects', title: 'Selected projects' },
     contact: { marker: 'Contact', title: 'Contact', caption: 'Pick a channel.', note: 'Or write to me directly' },
   },
 

@@ -94,9 +94,6 @@ onBeforeUnmount(() => {
     <div class="sec-head">
       <div>
         <h2>{{ site.sections.services.title }}</h2>
-        <p class="cap">
-          {{ site.sections.services.caption }}
-        </p>
       </div>
     </div>
     <ul

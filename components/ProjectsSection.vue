@@ -89,9 +89,6 @@ onBeforeUnmount(() => {
     <div class="sec-head">
       <div>
         <h2>{{ site.sections.projects.title }}</h2>
-        <p class="cap">
-          {{ site.sections.projects.caption }}
-        </p>
       </div>
     </div>
 
@@ -129,12 +126,17 @@ onBeforeUnmount(() => {
             {{ v.p.subtitle }}
           </p>
           <!-- eslint-disable vue/no-v-html -->
-          <p
-            v-for="(para, k) in v.p.description"
-            :key="k"
-            class="pv-desc"
-            v-html="para"
-          />
+          <div
+            :key="v.p.id"
+            class="pv-body"
+          >
+            <p
+              v-for="(para, k) in v.p.description"
+              :key="k"
+              class="pv-desc"
+              v-html="para"
+            />
+          </div>
           <!-- eslint-enable vue/no-v-html -->
           <dl class="pv-meta">
             <dt>Made with</dt>
@@ -230,6 +232,9 @@ onBeforeUnmount(() => {
 .pv-desc { margin-top: 16px; font-size: 16px; line-height: 1.55; color: #cfcfcf; }
 /* The font has one weight: emphasis by colour, not a synthesized bold. */
 .pv-desc :deep(strong) { font-weight: 400; color: var(--ink); }
+@property --pv-fade { syntax: '<length>'; inherits: false; initial-value: 0px; }
+/* A text that fits has no scroll range, so its timeline stays inactive and no fade is drawn. */
+@keyframes pv-fade { from { --pv-fade: 56px; } to { --pv-fade: 0px; } }
 .pv-meta { margin: 20px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; font-size: 15px; }
 .pv-meta dt { color: var(--ink-3); }
 .pv-link { margin-top: auto; padding-top: 24px; }
@@ -265,6 +270,15 @@ onBeforeUnmount(() => {
 @media (min-width: 1081px) {
   .viewer { aspect-ratio: auto; display: grid; align-items: center; }
   .viewer img { height: auto; aspect-ratio: 16 / 9; }
+  /* 800 px still fits a 900 px laptop screen under the header; a longer text scrolls inside. */
+  .insp-cell { max-height: 800px; grid-template-rows: minmax(0, 1fr); }
+  .insp { min-height: 0; }
+  .pv-body {
+    min-height: 0; overflow-y: auto; margin-right: -14px; padding-right: 14px;
+    scrollbar-width: thin; scrollbar-color: var(--raise-3) transparent;
+    mask-image: linear-gradient(#000 calc(100% - var(--pv-fade)), transparent);
+    animation: pv-fade linear both; animation-timeline: scroll(self);
+  }
 }
 @media (max-width: 1080px) {
   .mb { grid-template-columns: 1fr; }
