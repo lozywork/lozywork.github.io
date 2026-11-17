@@ -8,6 +8,7 @@ import { useToday } from '~/composables/useToday';
 const groups = [
   { key: 'career', label: 'Career', tone: 't-video', entries: site.career },
   { key: 'education', label: 'Education', tone: 't-music', entries: site.education },
+  { key: 'experience', label: 'Experience', tone: 't-mix', entries: site.experience },
 ] as const;
 type GroupKey = (typeof groups)[number]['key'];
 type Clip = Span & { entry: Entry };
@@ -69,9 +70,10 @@ function setTab(key: GroupKey, id?: string) {
 
 function onTabKey(e: KeyboardEvent, key: GroupKey) {
   if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-  const other = groups.find(g => g.key !== key)!.key;
-  tablist.value!.querySelector<HTMLElement>(`[data-tab="${other}"]`)!.focus();
-  setTab(other);
+  const i = groups.findIndex(g => g.key === key) + (e.key === 'ArrowRight' ? 1 : -1);
+  const next = groups[(i + groups.length) % groups.length].key;
+  tablist.value!.querySelector<HTMLElement>(`[data-tab="${next}"]`)!.focus();
+  setTab(next);
 }
 
 onMounted(() => {
@@ -97,7 +99,7 @@ onMounted(() => {
         ref="tablist"
         class="tabs"
         role="tablist"
-        aria-label="Career or education"
+        aria-label="Career, education or experience"
       >
         <button
           v-for="g in groups"
@@ -198,7 +200,10 @@ onMounted(() => {
         >
           <button @click="selected = e.id">
             <span class="e-role">{{ e.role }}</span>
-            <span class="e-org">{{ e.org }}</span>
+            <span
+              v-if="e.org"
+              class="e-org"
+            >{{ e.org }}</span>
             <span class="e-date">{{ formatRange(e.start, e.end, today) }}</span>
             <span class="e-len">{{ entryLength(e.start, e.end, today) }}</span>
           </button>
@@ -282,8 +287,8 @@ onMounted(() => {
 .e-len { grid-column: 2; grid-row: 2; text-align: right; color: var(--ink-3); font-size: .9375rem; white-space: nowrap; }
 
 @media (max-width: 760px) {
-  .tabs { padding: 12px; }
-  .tab { flex: 1; padding: 0 12px; }
+  .tabs { gap: 4px; padding: 8px; }
+  .tab { flex: 1; padding: 0 8px; font-size: 1rem; }
   .tl-scroll { display: none; }
   .entries { border-top: 0; padding: 8px 12px 12px; }
   .entry button { grid-template-columns: 1fr; padding: 16px 16px 16px 44px; }

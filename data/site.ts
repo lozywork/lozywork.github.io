@@ -30,10 +30,10 @@ export interface Service {
 export interface Entry {
   id: string;
   role: string;
-  org: string;
+  org?: string;
   clip: string;
   tooltip: string;
-  start: string; // 'YYYY-MM'
+  start: string; // 'YYYY-MM', or 'YYYY' when only the year is known
   end?: string; // 'YYYY-MM', left out = open-ended
 }
 
@@ -87,6 +87,7 @@ export interface Site {
   services: Service[];
   career: Entry[];
   education: Entry[];
+  experience: Entry[];
   projects: Project[];
   contact: Channel[];
 }
@@ -204,6 +205,23 @@ export const site: Site = {
       tooltip: 'Matura, focus music, Atelierschule Zürich',
       start: '2021-08',
       end: '2025-07',
+    },
+  ],
+
+  experience: [
+    {
+      id: 'music-prod',
+      role: 'Music Production',
+      clip: 'Music Production',
+      tooltip: 'Music Production since 2018',
+      start: '2018',
+    },
+    {
+      id: 'video-prod',
+      role: 'Video Production',
+      clip: 'Video Production',
+      tooltip: 'Video Production since 2020',
+      start: '2020',
     },
   ],
 

@@ -4,9 +4,11 @@ export interface Span { s: number; e: number }
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function parseYM(s: string): YM {
-  const [y, m] = s.split('-').map(Number);
+  const [y, m = 1] = s.split('-').map(Number);
   return { y, m };
 }
+
+const yearOnly = (s: string) => !s.includes('-');
 
 export function toIsoDate(d: Date): string {
   const pad = (n: number) => String(n).padStart(2, '0');
@@ -46,8 +48,9 @@ export function formatYM(ym: YM): string {
 
 export function formatRange(start: string, end: string | undefined, today: string): string {
   const s = parseYM(start);
-  if (!end && startPos(s) > todayPos(today)) return `From ${formatYM(s)}`;
-  return `${formatYM(s)} – ${end ? formatYM(parseYM(end)) : 'today'}`;
+  const from = yearOnly(start) ? start : formatYM(s);
+  if (!end && startPos(s) > todayPos(today)) return `From ${from}`;
+  return `${from} – ${end ? formatYM(parseYM(end)) : 'today'}`;
 }
 
 export function entryLength(start: string, end: string | undefined, today: string): string {
@@ -55,7 +58,10 @@ export function entryLength(start: string, end: string | undefined, today: strin
   const t = parseYM(today.slice(0, 7));
   const now = todayPos(today);
   if (startPos(s) > now) return 'Upcoming';
-  if (!end) return formatDuration(monthsInclusive(s, t));
+  if (!end) {
+    const months = monthsInclusive(s, t);
+    return formatDuration(yearOnly(start) ? months - months % 12 : months);
+  }
   const e = parseYM(end);
   if (endPos(e) <= now) return formatDuration(monthsInclusive(s, e));
   const total = monthsInclusive(s, e);
