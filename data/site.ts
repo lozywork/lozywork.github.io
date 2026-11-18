@@ -95,7 +95,7 @@ export interface Site {
 export const TAG_LABEL: Record<Tag, string> = { video: 'Video', music: 'Music', '3d': '3D' };
 export const LEVEL_LABEL: Record<Level, string> = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced' };
 
-const email = 'lozys.work@gmail.com';
+const email = 'hello@lozy.work';
 
 export const site: Site = {
   name: 'Lonny Zeindler',
